@@ -18,7 +18,7 @@
 #ifndef __INET_IEEE80211HTINTERLEAVING_H
 #define __INET_IEEE80211HTINTERLEAVING_H
 
-#include "inet/physicallayer/contract/layered/IInterleaver.h"
+#include "inet/physicallayer/contract/bitlevel/IInterleaver.h"
 
 namespace inet {
 namespace physicallayer {

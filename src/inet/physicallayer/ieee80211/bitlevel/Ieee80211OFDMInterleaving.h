@@ -15,33 +15,31 @@
 // along with this program; if not, see <http://www.gnu.org/licenses/>.
 //
 
-#include "inet/physicallayer/ieee80211/bitlevel/Ieee80211InterleaverModule.h"
+#ifndef __INET_IEEE80211OFDMINTERLEAVING_H
+#define __INET_IEEE80211OFDMINTERLEAVING_H
+
+#include "inet/physicallayer/contract/bitlevel/IInterleaver.h"
 
 namespace inet {
 
 namespace physicallayer {
 
-Define_Module(Ieee80211InterleaverModule);
-
-void Ieee80211InterleaverModule::initialize(int stage)
+class INET_API Ieee80211OFDMInterleaving : public IInterleaving
 {
-    if (stage == INITSTAGE_LOCAL) {
-        int numberOfCodedBitsPerSymbol = par("numberOfCodedBitsPerSymbol");
-        int numberOfCodedBitsPerSubcarrier = par("numberOfCodedBitsPerSubcarrier");
-        const Ieee80211Interleaving *interleaving = new Ieee80211Interleaving(numberOfCodedBitsPerSymbol, numberOfCodedBitsPerSubcarrier);
-        interleaver = new Ieee80211Interleaver(interleaving);
-    }
-}
+  protected:
+    int numberOfCodedBitsPerSymbol;
+    int numberOfCodedBitsPerSubcarrier;
 
-void Ieee80211InterleaverModule::printToStream(std::ostream& stream) const
-{
-    stream << interleaver;
-}
+  public:
+    Ieee80211OFDMInterleaving(int numberOfCodedBitsPerSymbol, int numberOfCodedBitsPerSubcarrier) :
+        numberOfCodedBitsPerSymbol(numberOfCodedBitsPerSymbol),
+        numberOfCodedBitsPerSubcarrier(numberOfCodedBitsPerSubcarrier) {}
 
-Ieee80211InterleaverModule::~Ieee80211InterleaverModule()
-{
-    delete interleaver;
-}
+    int getNumberOfCodedBitsPerSubcarrier() const { return numberOfCodedBitsPerSubcarrier; }
+    int getNumberOfCodedBitsPerSymbol() const { return numberOfCodedBitsPerSymbol; }
+};
 } /* namespace physicallayer */
 } /* namespace inet */
+
+#endif // ifndef __INET_IEEE80211OFDMINTERLEAVING_H
 

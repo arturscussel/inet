@@ -18,11 +18,11 @@
 #ifndef __INET_IEEE80211HTSIGNALCODE_H
 #define __INET_IEEE80211HTSIGNALCODE_H
 
-#include "inet/physicallayer/contract/layered/ICode.h"
-#include "inet/physicallayer/ieee80211/layered/Ieee80211HTInterleaving.h"
-#include "inet/physicallayer/ieee80211/layered/Ieee80211ConvolutionalCode.h"
-#include "inet/physicallayer/common/layered/AdditiveScrambling.h"
-#include "inet/physicallayer/ieee80211/Ieee80211OFDMModulation.h"
+#include "inet/physicallayer/contract/bitlevel/ICode.h"
+#include "inet/physicallayer/ieee80211/bitlevel/Ieee80211HTInterleaving.h"
+#include "inet/physicallayer/ieee80211/bitlevel/Ieee80211ConvolutionalCode.h"
+#include "inet/physicallayer/common/bitlevel/AdditiveScrambling.h"
+#include "inet/physicallayer/ieee80211/mode/Ieee80211OFDMModulation.h"
 
 namespace inet {
 namespace physicallayer {

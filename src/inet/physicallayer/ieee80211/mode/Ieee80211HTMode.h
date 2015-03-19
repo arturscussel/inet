@@ -20,7 +20,7 @@
 
 #include "inet/physicallayer/ieee80211/mode/IIeee80211Mode.h"
 #include "inet/physicallayer/ieee80211/mode/Ieee80211OFDMMode.h"
-#include "inet/physicallayer/ieee80211/Ieee80211HTCode.h"
+#include "inet/physicallayer/ieee80211/mode/Ieee80211HTCode.h"
 
 namespace inet {
 namespace physicallayer {
