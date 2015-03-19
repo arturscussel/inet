@@ -110,6 +110,7 @@ cPacket* EthernetSerializer::deserialize(Buffer &b, Context& c)
     etherPacket->setFrameByteLength(etherPacket->getByteLength());
     uint32_t calcfcs = ethernetCRC(b._getBuf(), b.getPos());
     uint32_t storedfcs = b.readUint32();
+    // TODO: wtf 0xC704DD7B? (levy)
     if (storedfcs && calcfcs != 0xC704DD7B)
         etherPacket->setBitError(true);
     return etherPacket;

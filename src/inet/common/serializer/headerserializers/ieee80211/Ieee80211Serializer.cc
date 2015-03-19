@@ -418,7 +418,7 @@ cPacket* Ieee80211Serializer::deserialize(Buffer &b, Context& c)
     cPacket *frame = nullptr;
 
     uint32_t crc = ethernetCRC(b._getBuf(), b._getBufSize());
-    EV_DEBUG << "CRC: "<< crc << " (" << (0x2144DF1C == crc ) << ")"<< endl;
+    EV_DEBUG << "CRC: "<< crc << endl;
     uint8_t type = b.readByte();
     uint8_t fc_1 = b.readByte();   // fc_1
     switch(type)
@@ -708,8 +708,12 @@ cPacket* Ieee80211Serializer::deserialize(Buffer &b, Context& c)
         }
 
         default:
-            throw cRuntimeError("Ieee80211Serializer: cannot serialize the frame");
+        {
+            EV_ERROR << "Cannot deserialize Ieee80211 packet: type " << type << " not supported.";
+            return nullptr;
+        }
     }
+    // TODO: check CRC
     b.accessNBytes(4);  //crc
     frame->setByteLength(b.getPos());
     return frame;
