@@ -417,8 +417,7 @@ cPacket* Ieee80211Serializer::deserialize(Buffer &b, Context& c)
     ASSERT(b.getPos() == 0);
     cPacket *frame = nullptr;
 
-    uint32_t crc = ethernetCRC(b._getBuf(), b._getBufSize());
-    EV_DEBUG << "CRC: "<< crc << endl;
+    uint32_t calculatedCrc = ethernetCRC(b._getBuf(), b._getBufSize() - 4);
     uint8_t type = b.readByte();
     uint8_t fc_1 = b.readByte();   // fc_1
     switch(type)
@@ -714,7 +713,12 @@ cPacket* Ieee80211Serializer::deserialize(Buffer &b, Context& c)
         }
     }
     // TODO: check CRC
-    b.accessNBytes(4);  //crc
+    uint32_t receivedCrc = b.readUint32();
+    EV_DEBUG << "Calculated CRC: " << calculatedCrc << ", received CRC: " << receivedCrc << endl;
+    if (receivedCrc != calculatedCrc)
+        frame->setBitError(true);
+
+    // TODO: don't set this directly, it should be computed above separately in each case
     frame->setByteLength(b.getPos());
     return frame;
 }

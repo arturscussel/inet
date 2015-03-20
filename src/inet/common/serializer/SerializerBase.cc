@@ -221,6 +221,8 @@ cPacket *SerializerBase::deserializePacket(Buffer &b, Context& context)
     if (pkt == nullptr) {
         b.seek(startPos);
         pkt = serializers.byteArraySerializer.deserialize(b, context);
+        // TODO: set bit error true?
+        pkt->setBitError(true);
     }
     if (!pkt->hasBitError() && !b.hasError() && (b.getPos() - startPos != pkt->getByteLength())) {
         const char *encclass = pkt->getEncapsulatedPacket() ? pkt->getEncapsulatedPacket()->getClassName() : "<nullptr>";

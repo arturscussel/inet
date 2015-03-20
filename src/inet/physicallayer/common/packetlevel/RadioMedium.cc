@@ -757,6 +757,7 @@ cPacket *RadioMedium::receivePacket(const IRadio *radio, IRadioFrame *radioFrame
                          << "D " << decision->isReceptionPossible() << " " << decision->isReceptionAttempted() << " " << decision->isReceptionSuccessful() << endl;
     }
     cPacket *macFrame = decision->getMacFrame()->dup();
+    // TODO: the bit error shouldn't be set in bit level simulations, because it should be already set by the deserializer
     macFrame->setBitError(!decision->isReceptionSuccessful());
     macFrame->setControlInfo(const_cast<ReceptionIndication *>(decision->getIndication()));
     delete listening;
