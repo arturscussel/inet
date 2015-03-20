@@ -113,6 +113,9 @@ class INET_API Ieee80211HTSignalMode : public IIeee80211HeaderMode, public Ieee8
         unsigned int getModulationAndCodingScheme() const { return modulationAndCodingScheme; }
         virtual const simtime_t getDuration() const override { return getHTSIGDuration(); }
         virtual int getBitLength() const override;
+        virtual bps getNetBitrate() const override { return Ieee80211HTModeBase::getNetBitrate(); }
+        virtual bps getGrossBitrate() const override { return Ieee80211HTModeBase::getGrossBitrate(); }
+        virtual const IModulation *getModulation() const override { return modulation; }
 };
 
 /*
@@ -184,10 +187,10 @@ class INET_API Ieee80211HTDataMode : public IIeee80211DataMode, public Ieee80211
         virtual ~Ieee80211HTDataMode();
 
         const Ieee80211HTCode* getCode() const { return code; }
-        const Ieee80211OFDMModulation* getStream1Modulation() const { return stream1Modulation; }
-        const Ieee80211OFDMModulation* getStream2Modulation() const { return stream2Modulation; }
-        const Ieee80211OFDMModulation* getStream3Modulation() const { return stream3Modulation; }
-        const Ieee80211OFDMModulation* getStream4Modulation() const { return stream4Modulation; }
+        virtual const Ieee80211OFDMModulation* getModulation() const override { return stream1Modulation; }
+        const Ieee80211OFDMModulation* getStreamExtension1Modulation() const { return stream2Modulation; }
+        const Ieee80211OFDMModulation* getStreamExtension2Modulation() const { return stream3Modulation; }
+        const Ieee80211OFDMModulation* getStreamExtension3Modulation() const { return stream4Modulation; }
 
         inline int getServiceBitLength() const { return 16; }
         inline int getTailBitLength() const { return 6 * numberOfBCCEncoders; }
@@ -195,7 +198,8 @@ class INET_API Ieee80211HTDataMode : public IIeee80211DataMode, public Ieee80211
 
         virtual int getBitLength(int dataBitLength) const override;
         virtual const simtime_t getDuration(int dataBitLength) const override;
-
+        virtual bps getNetBitrate() const override { return Ieee80211HTModeBase::getNetBitrate(); }
+        virtual bps getGrossBitrate() const override { return Ieee80211HTModeBase::getGrossBitrate(); };
 };
 
 class INET_API Ieee80211HTMode : public IIeee80211Mode
